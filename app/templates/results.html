@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Analysis Results</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Analysis Results</h1>
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Criteria</th>
+                    <th>Sub Criteria</th>
+                    <th>Title (%)</th>
+                    <th>Objectives (%)</th>
+                    <th>Scope and Limitations (%)</th>
+                    <th>Sub Total (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for criterion, sub_criteria in results['section_scores'].items() %}
+                    {% for sub_criterion, sections in sub_criteria.items() %}
+                    <tr>
+                        {% if loop.first %}
+                        <td rowspan="{{ sub_criteria|length }}">{{ criterion }}</td>
+                        {% endif %}
+                        <td>{{ sub_criterion }}</td>
+                        <td>{{ sections['Title'] | round(2) }}</td>
+                        <td>{{ sections['Objectives'] | round(2) }}</td>
+                        <td>{{ sections['Scope and Limitations'] | round(2) }}</td>
+                        <td>{{ results['subtotals'][criterion][sub_criterion] | round(2) }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Overall Total: <strong>{{ results['overall_total'] | round(2) }}%</strong></h2>
+        <h2>Interpretation: <strong>{{ results['interpretation'] }}</strong></h2>
+        <a href="/">Upload Another File</a>
+    </div>
+</body>
+</html>
