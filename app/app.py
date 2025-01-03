@@ -9,7 +9,6 @@ app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # 5MB limit
 app.secret_key = 'your_secret_key'
 
 ALLOWED_EXTENSIONS = {'pdf'}
-ALLOWED_EXTENSIONS2 = {'CA'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
